@@ -1,0 +1,40 @@
+top_srcdir = .
+PKG_NAME = otoderiv
+SOURCES  = otoderiv.ml
+
+C_SOURCES =
+LIBS =
+
+REQUIRES = algen
+
+EXAMPLES_BYTE =
+EXAMPLES_OPT = $(EXAMPLES_BYTE:.byte=.opt)
+EXAMPLES = $(EXAMPLES_BYTE) $(EXAMPLES_OPT)
+
+SYNTAX =
+
+.PHONY: all check-spec clean-spec dep-spec
+#all: $(XARCHIVE) xexamples
+all: $(ARCHIVE) examples
+
+include $(top_srcdir)/make.common
+
+opt: $(XARCHIVE)
+xexamples: $(XARCHIVE) $(EXAMPLES_OPT)
+examples: $(ARCHIVE) $(EXAMPLES_BYTE)
+$(EXAMPLES_BYTE): $(ARCHIVE)
+$(EXAMPLES_OPT): $(XARCHIVE)
+
+check.byte: check.ml $(ARCHIVE)
+	$(OCAMLC) -o $@ $(SYNTAX) -package "$(REQUIRES),oUnit" -ccopt -L$(top_srcdir) $(ARCHIVE) $(EXTRALIBS) -linkpkg $(OCAMLFLAGS) $<
+
+check.opt: check.ml $(XARCHIVE)
+	$(OCAMLOPT) -o $@ $(SYNTAX) -package "$(REQUIRES),oUnit" -ccopt -L$(top_srcdir) $(XARCHIVE) $(EXTRALIBS:.cma=.cmxa) -linkpkg $(OCAMLOPTFLAGS) $<
+
+check-spec: check.byte
+	@if ./check.byte ; then echo "Custom check succeeded."; else echo "custom checks FAILED"; fi
+
+clean-spec:
+
+dep-spec:
+

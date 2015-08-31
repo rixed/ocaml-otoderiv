@@ -1,0 +1,5 @@
+description = "Test at Automatic Derivation"
+version = "1"
+requires = "algen"
+archive(byte) = "otoderiv.cma"
+archive(native) = "otoderiv.cmxa"
