@@ -32,7 +32,7 @@ check.opt: check.ml $(XARCHIVE)
 	$(OCAMLOPT) -o $@ $(SYNTAX) -package "$(REQUIRES),oUnit" -ccopt -L$(top_srcdir) $(XARCHIVE) $(EXTRALIBS:.cma=.cmxa) -linkpkg $(OCAMLOPTFLAGS) $<
 
 check-spec: check.byte
-	@if ./check.byte ; then echo "Custom check succeeded."; else echo "custom checks FAILED"; fi
+	@if ./check.byte ; then echo "Custom check SUCCEEDED."; else echo "custom checks FAILED"; fi
 
 clean-spec:
 
