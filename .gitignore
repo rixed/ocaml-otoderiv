@@ -20,4 +20,4 @@ conf-check.old
 /make.common
 /config.status
 autom4te.cache
-oUnit-anon.cache
+oUnit-*cache
